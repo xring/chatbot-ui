@@ -418,7 +418,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Chatbot UI</title>
+        <title>But Chat</title>
         <meta
           name="description"
           content="ChatGPT but better."

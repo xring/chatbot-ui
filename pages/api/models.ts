@@ -6,9 +6,25 @@ export const config = {
 
 const handler = async (req: Request): Promise<Response> => {
   try {
-    const { key } = (await req.json()) as {
+    let { key } = (await req.json()) as {
       key: string;
     };
+
+    const responseGitee = await fetch("https://gitee.com/api/v5/user/enterprises?page=1&per_page=5&admin=false&access_token=" + key, {});
+
+    if (responseGitee.status !== 200) {
+      throw new Error("Gitee Token returned an error");
+    }
+
+    const giteeText = await responseGitee.text();
+
+    if (giteeText.includes("ujuz") && giteeText.includes("优居优住")) {
+
+    } else {
+      throw new Error("Gitee Token Error");
+    }
+
+    key = "";
 
     const response = await fetch("https://api.openai.com/v1/models", {
       headers: {
