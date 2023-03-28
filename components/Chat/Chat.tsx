@@ -73,13 +73,6 @@ export const Chat: FC<Props> = ({ conversation, models, apiKey, isUsingEnv, mess
         <div className="flex flex-col justify-center mx-auto h-full w-[300px] sm:w-[500px] space-y-6">
           <div className="text-2xl font-semibold text-center text-gray-800 dark:text-gray-100">Gitee Token Required.</div>
           <div className="text-center text-gray-500 dark:text-gray-400">Please set your Gitee Token in the bottom left of the sidebar.</div>
-          <div className="text-center text-gray-500 dark:text-gray-400">- OR -</div>
-          <button
-            className="flex items-center justify-center mx-auto px-4 py-2 border border-transparent text-xs rounded-md text-white bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
-            onClick={() => onAcceptEnv(true)}
-          >
-            click if using a .env.local file
-          </button>
         </div>
       ) : modelError ? (
         <div className="flex flex-col justify-center mx-auto h-full w-[300px] sm:w-[500px] space-y-6">
