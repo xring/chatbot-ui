@@ -9,10 +9,12 @@ const handler = async (req: Request): Promise<Response> => {
     let { key } = (await req.json()) as {
       key: string;
     };
-
+    console.log(key);
     const responseGitee = await fetch("https://gitee.com/api/v5/user/enterprises?page=1&per_page=5&admin=false&access_token=" + key, {});
 
+
     if (responseGitee.status !== 200) {
+      console.log(responseGitee.status);
       throw new Error("Gitee Token returned an error");
     }
 

@@ -71,7 +71,7 @@ export const Chat: FC<Props> = ({ conversation, models, apiKey, isUsingEnv, mess
     <div className="relative flex-1 overflow-none dark:bg-[#343541] bg-white">
       {!apiKey && !isUsingEnv ? (
         <div className="flex flex-col justify-center mx-auto h-full w-[300px] sm:w-[500px] space-y-6">
-          <div className="text-2xl font-semibold text-center text-gray-800 dark:text-gray-100">Gitee Token Required</div>
+          <div className="text-2xl font-semibold text-center text-gray-800 dark:text-gray-100">Gitee Token Required.</div>
           <div className="text-center text-gray-500 dark:text-gray-400">Please set your Gitee Token in the bottom left of the sidebar.</div>
           <div className="text-center text-gray-500 dark:text-gray-400">- OR -</div>
           <button
@@ -83,9 +83,9 @@ export const Chat: FC<Props> = ({ conversation, models, apiKey, isUsingEnv, mess
         </div>
       ) : modelError ? (
         <div className="flex flex-col justify-center mx-auto h-full w-[300px] sm:w-[500px] space-y-6">
-          <div className="text-center text-red-500">Error fetching models.</div>
-          <div className="text-center text-red-500">Make sure your Gitee Token is set in the bottom left of the sidebar or in a .env.local file and refresh.</div>
-          <div className="text-center text-red-500">If you completed this step, OpenAI may be experiencing issues.</div>
+          <div className="text-center text-red-500">Gitee Token Invalid.</div>
+          <div className="text-center text-red-500">"emails" and "enterprises" should be checked when get a Gitee token.</div>
+          <div className="text-center text-red-500">Get token at <a target="_blank" href="https://gitee.com/profile/personal_access_tokens">Gitee</a></div>
         </div>
       ) : (
         <>
