@@ -85,7 +85,7 @@ export const Chat: FC<Props> = ({ conversation, models, apiKey, isUsingEnv, mess
         <div className="flex flex-col justify-center mx-auto h-full w-[300px] sm:w-[500px] space-y-6">
           <div className="text-center text-red-500">Gitee Token Invalid.</div>
           <div className="text-center text-red-500">"emails" and "enterprises" should be checked when get a Gitee token.</div>
-          <div className="text-center text-red-500">Get token at <a target="_blank" href="https://gitee.com/profile/personal_access_tokens">Gitee</a></div>
+          <div className="text-center text-red-500">Get token at https://gitee.com/profile/personal_access_tokens</div>
         </div>
       ) : (
         <>
