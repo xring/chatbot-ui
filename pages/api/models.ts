@@ -10,8 +10,8 @@ const handler = async (req: Request): Promise<Response> => {
       key: string;
     };
     console.log(key);
-    const responseGitee = await fetch("https://gitee.com/api/v5/user/enterprises?page=1&per_page=5&admin=false&access_token=" + key, {});
 
+    const responseGitee = await fetch("https://gitee.com/api/v5/user/enterprises?page=1&per_page=5&admin=false&access_token=" + key, {});
 
     if (responseGitee.status !== 200) {
       console.log(responseGitee.status);
