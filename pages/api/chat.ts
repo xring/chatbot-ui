@@ -34,7 +34,7 @@ const handler = async (req: Request): Promise<Response> => {
       }
       if (globalData.data[userKey]) {
         if (globalData.data[userKey] >= dailyLimit) {
-          return new Response("Error: GPT-4 model has reached the daily request limit", { status: 500 });
+          return new Response("Error: GPT-4 model has reached the daily request limit for 10 times", { status: 500 });
         } else {
             globalData.data[userKey]++;
         }
