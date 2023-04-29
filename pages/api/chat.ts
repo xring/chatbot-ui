@@ -28,9 +28,13 @@ const handler = async (req: Request): Promise<Response> => {
     if (model.id === OpenAIModelID.GPT_4) {
       const currentDateInYYYYMMDD = getCurrentDateInYYYYMMDD();
       const userKey = currentDateInYYYYMMDD + "_" + key;
+      let dailyLimit = 10;
+      if (key === process.env.GITEE_ADMIN_TOKEN) {
+        dailyLimit = 100;
+      }
       if (globalData.data[userKey]) {
-        if (globalData.data[userKey] >= 2) {
-          return new Response("Error: " + "GPT-4 model has reached the daily request limit", { status: 500 });
+        if (globalData.data[userKey] >= dailyLimit) {
+          return new Response("Error: GPT-4 model has reached the daily request limit", { status: 500 });
         } else {
             globalData.data[userKey]++;
         }
