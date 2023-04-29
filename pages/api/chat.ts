@@ -10,9 +10,34 @@ export const config = {
   runtime: "edge",
 };
 
+const globalData = require('../../globalData');
+
+function getCurrentDateInYYYYMMDD(): string {
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = ('0' + (date.getMonth() + 1)).slice(-2);
+  const day = ('0' + date.getDate()).slice(-2);
+
+  return `${year}${month}${day}`;
+}
+
 const handler = async (req: Request): Promise<Response> => {
   try {
     const { model, messages, key, prompt } = (await req.json()) as ChatBody;
+
+    if (model.id === OpenAIModelID.GPT_4) {
+      const currentDateInYYYYMMDD = getCurrentDateInYYYYMMDD();
+      const userKey = currentDateInYYYYMMDD + "_" + key;
+      if (globalData.data[userKey]) {
+        if (globalData.data[userKey] >= 2) {
+          return new Response("Error: " + "GPT-4 model has reached the daily request limit", { status: 500 });
+        } else {
+            globalData.data[userKey]++;
+        }
+      } else {
+        globalData.data[userKey] = 1;
+      }
+    }
 
     await init((imports) => WebAssembly.instantiate(wasm, imports));
     const encoding = new Tiktoken(
@@ -51,7 +76,7 @@ const handler = async (req: Request): Promise<Response> => {
     return new Response(stream);
   } catch (error) {
     console.error(error);
-    return new Response("Error", { status: 500 });
+    return new Response("Error: " + error, { status: 500 });
   }
 };
 

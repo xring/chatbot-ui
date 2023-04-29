@@ -15,7 +15,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     if (responseGitee.status !== 200) {
       console.log(responseGitee.status);
-      throw new Error("Gitee Token returned an error");
+      return new Response("Gitee Token Error: Error Response From Gitee", { status: 500 });
     }
 
     const giteeText = await responseGitee.text();
@@ -23,7 +23,7 @@ const handler = async (req: Request): Promise<Response> => {
     if (giteeText.includes("ujuz") && giteeText.includes("优居优住")) {
 
     } else {
-      throw new Error("Gitee Token Error");
+      return new Response("Gitee Token Error: Invalid User", { status: 500 });
     }
 
     key = "";
@@ -57,7 +57,7 @@ const handler = async (req: Request): Promise<Response> => {
     return new Response(JSON.stringify(models), { status: 200 });
   } catch (error) {
     console.error(error);
-    return new Response("Error", { status: 500 });
+    return new Response("Error: " + error, { status: 500 });
   }
 };
 
