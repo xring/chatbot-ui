@@ -50,7 +50,8 @@ const handler = async (req: Request): Promise<Response> => {
       tiktokenModel.pat_str
     );
 
-    const tokenLimit = model.id === OpenAIModelID.GPT_4 ? 6000 : 3000;
+    //const tokenLimit = model.id === OpenAIModelID.GPT_4 ? 6000 : 3000;
+    const tokenLimit = model.id === OpenAIModelID.GPT_4 ? 1000 : 3000;
 
     let promptToSend = prompt;
     if (!promptToSend) {
