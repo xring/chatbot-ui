@@ -28,9 +28,9 @@ const handler = async (req: Request): Promise<Response> => {
     if (model.id === OpenAIModelID.GPT_4) {
       const currentDateInYYYYMMDD = getCurrentDateInYYYYMMDD();
       const userKey = currentDateInYYYYMMDD + "_" + key;
-      let dailyLimit = 10;
+      let dailyLimit = 30;
       if (key === process.env.GITEE_ADMIN_TOKEN) {
-        dailyLimit = 100;
+        dailyLimit = 300;
       }
       if (globalData.data[userKey]) {
         if (globalData.data[userKey] >= dailyLimit) {
@@ -51,7 +51,7 @@ const handler = async (req: Request): Promise<Response> => {
     );
 
     //const tokenLimit = model.id === OpenAIModelID.GPT_4 ? 6000 : 3000;
-    const tokenLimit = model.id === OpenAIModelID.GPT_4 ? 1000 : 3000;
+    const tokenLimit = model.id === OpenAIModelID.GPT_4 ? 5000 : 3000;
 
     let promptToSend = prompt;
     if (!promptToSend) {
