@@ -51,7 +51,7 @@ const handler = async (req: Request): Promise<Response> => {
     );
 
     //const tokenLimit = model.id === OpenAIModelID.GPT_4 ? 6000 : 3000;
-    const tokenLimit = model.id === OpenAIModelID.GPT_4 ? 5000 : 3000;
+    const tokenLimit = model.id === OpenAIModelID.GPT_4 ? 2000 : 3000;
 
     let promptToSend = prompt;
     if (!promptToSend) {
