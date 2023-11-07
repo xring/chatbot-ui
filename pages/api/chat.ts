@@ -29,7 +29,7 @@ const handler = async (req: Request): Promise<Response> => {
       const currentDateInYYYYMMDD = getCurrentDateInYYYYMMDD();
       const userKey = currentDateInYYYYMMDD + "_" + key;
       let dailyLimit = 100;
-      if (key === process.env.GITEE_ADMIN_TOKEN) {
+      if (process.env.GITEE_ADMIN_TOKEN && process.env.GITEE_ADMIN_TOKEN.includes(key)) {
         dailyLimit = 500;
       }
       if (globalData.data[userKey]) {
