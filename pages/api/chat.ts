@@ -41,13 +41,13 @@ const handler = async (req: Request): Promise<Response> => {
     const { model, messages, key, prompt } = (await req.json()) as ChatBody;
 
     if (model.id === OpenAIModelID.GPT_4 || model.id === OpenAIModelID.GPT_4_1106_PREVIEW) {
-      // const currentDateInYYYYMMDD = getCurrentDateInYYYYMMDD();
-      // const userKey = currentDateInYYYYMMDD + "_" + key;
-      const currentTimestampIn3HourWindow = getCurrentTimestampIn3HourWindow();
-      const userKey = currentTimestampIn3HourWindow + "_" + key;
-      let dailyLimit = 30;
+      const currentDateInYYYYMMDD = getCurrentDateInYYYYMMDD();
+      const userKey = currentDateInYYYYMMDD + "_" + key;
+      //const currentTimestampIn3HourWindow = getCurrentTimestampIn3HourWindow();
+      //const userKey = currentTimestampIn3HourWindow + "_" + key;
+      let dailyLimit = 100;
       if (process.env.GITEE_ADMIN_TOKEN && process.env.GITEE_ADMIN_TOKEN.includes(key)) {
-        dailyLimit = 50;
+        dailyLimit = 500;
       }
       if (globalData.data[userKey]) {
         if (globalData.data[userKey] >= dailyLimit) {
