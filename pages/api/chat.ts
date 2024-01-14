@@ -21,20 +21,37 @@ function getCurrentDateInYYYYMMDD(): string {
   return `${year}${month}${day}`;
 }
 
+function getCurrentTimestampIn3HourWindow(): string {
+  const now = new Date();
+  const oneHour = 60 * 60 * 1000; // 一小时的毫秒数
+  const threeHours = 3 * oneHour; // 三小时的毫秒数
+
+  // 获取当前时间的时间戳
+  const currentTimestamp = now.getTime();
+
+  // 计算最近的3小时时间窗的开始时间戳
+  const tmp = currentTimestamp - (currentTimestamp % threeHours);
+
+  // 将结果转换为字符串并返回
+  return `${tmp}`;
+}
+
 const handler = async (req: Request): Promise<Response> => {
   try {
     const { model, messages, key, prompt } = (await req.json()) as ChatBody;
 
     if (model.id === OpenAIModelID.GPT_4 || model.id === OpenAIModelID.GPT_4_1106_PREVIEW) {
-      const currentDateInYYYYMMDD = getCurrentDateInYYYYMMDD();
-      const userKey = currentDateInYYYYMMDD + "_" + key;
-      let dailyLimit = 100;
+      // const currentDateInYYYYMMDD = getCurrentDateInYYYYMMDD();
+      // const userKey = currentDateInYYYYMMDD + "_" + key;
+      const currentTimestampIn3HourWindow = getCurrentTimestampIn3HourWindow();
+      const userKey = currentTimestampIn3HourWindow + "_" + key;
+      let dailyLimit = 30;
       if (process.env.GITEE_ADMIN_TOKEN && process.env.GITEE_ADMIN_TOKEN.includes(key)) {
-        dailyLimit = 500;
+        dailyLimit = 50;
       }
       if (globalData.data[userKey]) {
         if (globalData.data[userKey] >= dailyLimit) {
-          return new Response("Error: GPT-4 model has reached the daily request limit for 100 times", { status: 500 });
+          return new Response("Error: GPT-4 model has reached the daily request limit for 30 times per 3 hours", { status: 500 });
         } else {
             globalData.data[userKey]++;
         }
