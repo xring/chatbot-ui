@@ -20,7 +20,7 @@ export const OpenAIModels: Record<OpenAIModelID, OpenAIModel> = {
   },
   [OpenAIModelID.GPT_4_PREVIEW]: {
     id: OpenAIModelID.GPT_4_PREVIEW,
-    name: "GPT-4-1106-PREVIEW"
+    name: "GPT-4-PREVIEW"
   }
 };
 
