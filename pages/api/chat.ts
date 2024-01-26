@@ -40,7 +40,7 @@ const handler = async (req: Request): Promise<Response> => {
   try {
     const { model, messages, key, prompt } = (await req.json()) as ChatBody;
 
-    if (model.id === OpenAIModelID.GPT_4 || model.id === OpenAIModelID.GPT_4_1106_PREVIEW) {
+    if (model.id === OpenAIModelID.GPT_4 || model.id === OpenAIModelID.GPT_4_PREVIEW) {
       const currentDateInYYYYMMDD = getCurrentDateInYYYYMMDD();
       const userKey = currentDateInYYYYMMDD + "_" + key;
       //const currentTimestampIn3HourWindow = getCurrentTimestampIn3HourWindow();
@@ -70,7 +70,7 @@ const handler = async (req: Request): Promise<Response> => {
     //const tokenLimit = model.id === OpenAIModelID.GPT_4 ? 6000 : 3000;
     let tokenLimit = model.id === OpenAIModelID.GPT_4 ? 2000 : 3000;
 
-    if (model.id === OpenAIModelID.GPT_4_1106_PREVIEW) {
+    if (model.id === OpenAIModelID.GPT_4_PREVIEW) {
       tokenLimit = 60000;
     }
 
