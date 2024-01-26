@@ -4,22 +4,22 @@ export interface OpenAIModel {
 }
 
 export enum OpenAIModelID {
-  GPT_3_5 = "gpt-3.5-turbo",
+  GPT_3_5 = "gpt-3.5-turbo-1106",
   GPT_4 = "gpt-4",
-  GPT_4_1106_PREVIEW = "gpt-4-1106-preview"
+  GPT_4_PREVIEW = "gpt-4-turbo-preview"
 }
 
 export const OpenAIModels: Record<OpenAIModelID, OpenAIModel> = {
   [OpenAIModelID.GPT_3_5]: {
     id: OpenAIModelID.GPT_3_5,
-    name: "Default (GPT-3.5)"
+    name: "GPT-3.5"
   },
   [OpenAIModelID.GPT_4]: {
     id: OpenAIModelID.GPT_4,
     name: "GPT-4"
   },
-  [OpenAIModelID.GPT_4_1106_PREVIEW]: {
-    id: OpenAIModelID.GPT_4_1106_PREVIEW,
+  [OpenAIModelID.GPT_4_PREVIEW]: {
+    id: OpenAIModelID.GPT_4_PREVIEW,
     name: "GPT-4-1106-PREVIEW"
   }
 };
