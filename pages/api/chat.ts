@@ -45,13 +45,13 @@ const handler = async (req: Request): Promise<Response> => {
       const userKey = currentDateInYYYYMMDD + "_" + key;
       //const currentTimestampIn3HourWindow = getCurrentTimestampIn3HourWindow();
       //const userKey = currentTimestampIn3HourWindow + "_" + key;
-      let dailyLimit = 100;
+      let dailyLimit = 300;
       if (process.env.GITEE_ADMIN_TOKEN && process.env.GITEE_ADMIN_TOKEN.includes(key)) {
-        dailyLimit = 500;
+        dailyLimit = 2000;
       }
       if (globalData.data[userKey]) {
         if (globalData.data[userKey] >= dailyLimit) {
-          return new Response("Error: GPT-4 model has reached the daily request limit for 30 times per 3 hours", { status: 500 });
+          return new Response("Error: GPT-4 model has reached the daily request limit for 300 times per day", { status: 500 });
         } else {
             globalData.data[userKey]++;
         }
