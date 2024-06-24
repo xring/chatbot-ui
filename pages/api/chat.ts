@@ -40,18 +40,18 @@ const handler = async (req: Request): Promise<Response> => {
   try {
     const { model, messages, key, prompt } = (await req.json()) as ChatBody;
 
-    if (model.id === OpenAIModelID.GPT_4 || model.id === OpenAIModelID.GPT_4_PREVIEW) {
+    if (model.id === OpenAIModelID.GPT_4_TURBO || model.id === OpenAIModelID.GPT_4_TURBO_PREVIEW || model.id === OpenAIModelID.GPT_4_O) {
       const currentDateInYYYYMMDD = getCurrentDateInYYYYMMDD();
       const userKey = currentDateInYYYYMMDD + "_" + key;
       //const currentTimestampIn3HourWindow = getCurrentTimestampIn3HourWindow();
       //const userKey = currentTimestampIn3HourWindow + "_" + key;
-      let dailyLimit = 300;
+      let dailyLimit = 500;
       if (process.env.GITEE_ADMIN_TOKEN && process.env.GITEE_ADMIN_TOKEN.includes(key)) {
-        dailyLimit = 2000;
+        dailyLimit = 5000;
       }
       if (globalData.data[userKey]) {
         if (globalData.data[userKey] >= dailyLimit) {
-          return new Response("Error: GPT-4 model has reached the daily request limit for 300 times per day", { status: 500 });
+          return new Response("Error: reached the daily request limit for 500 times per day", { status: 500 });
         } else {
             globalData.data[userKey]++;
         }
@@ -68,11 +68,7 @@ const handler = async (req: Request): Promise<Response> => {
     );
 
     //const tokenLimit = model.id === OpenAIModelID.GPT_4 ? 6000 : 3000;
-    let tokenLimit = model.id === OpenAIModelID.GPT_4 ? 2000 : 3000;
-
-    if (model.id === OpenAIModelID.GPT_4_PREVIEW) {
-      tokenLimit = 60000;
-    }
+    let tokenLimit = model.id === OpenAIModelID.GPT_3_5 ? 10000 : 70000;
 
     let promptToSend = prompt;
     if (!promptToSend) {
