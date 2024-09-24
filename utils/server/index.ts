@@ -149,5 +149,5 @@ export const OpenAIO1 = async (model: OpenAIModel, systemPrompt: string, key: st
     throw new Error("No choices returned from OpenAI API");
   }
 
-  return data.choices[0].text;
+  return data.choices[0].message.content;
 };
