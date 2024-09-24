@@ -133,7 +133,7 @@ export const OpenAIO1 = async (model: OpenAIModel, systemPrompt: string, key: st
     body: JSON.stringify({
       model: model.id,
       messages: messages,
-      max_tokens: 3000,
+      max_completion_tokens: 3000,
       stream: false
     })
   });
