@@ -1,6 +1,6 @@
 import {ChatBody, Message, OpenAIModelID} from "@/types";
 import {DEFAULT_SYSTEM_PROMPT} from "@/utils/app/const";
-import {OpenAIO1Stream, OpenAIStream} from "@/utils/server";
+import {OpenAIO1, OpenAIO1Stream, OpenAIStream} from "@/utils/server";
 import tiktokenModel from "@dqbd/tiktoken/encoders/cl100k_base.json";
 import {init, Tiktoken} from "@dqbd/tiktoken/lite/init";
 // @ts-expect-error
@@ -94,7 +94,7 @@ const handler = async (req: Request): Promise<Response> => {
         encoding.free();
 
         if (model.id === OpenAIModelID.O1_MINI || model.id === OpenAIModelID.O1_PREVIEW) {
-            const stream = await OpenAIO1Stream(model, promptToSend, key, messagesToSend);
+            const stream = await OpenAIO1(model, promptToSend, key, messagesToSend);
             return new Response(stream);
         } else {
             const stream = await OpenAIStream(model, promptToSend, key, messagesToSend);
