@@ -40,7 +40,7 @@ const handler = async (req: Request): Promise<Response> => {
   try {
     const { model, messages, key, prompt } = (await req.json()) as ChatBody;
 
-    if (model.id === OpenAIModelID.GPT_4_TURBO || model.id === OpenAIModelID.GPT_4_TURBO_PREVIEW || model.id === OpenAIModelID.GPT_4_O) {
+    if (model.id === OpenAIModelID.GPT_4_TURBO || model.id === OpenAIModelID.GPT_4_TURBO_PREVIEW || model.id === OpenAIModelID.GPT_4_O || model.id === OpenAIModelID.O1_PREVIEW || model.id === OpenAIModelID.O1_MINI) {
       const currentDateInYYYYMMDD = getCurrentDateInYYYYMMDD();
       const userKey = currentDateInYYYYMMDD + "_" + key;
       //const currentTimestampIn3HourWindow = getCurrentTimestampIn3HourWindow();
