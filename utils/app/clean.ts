@@ -12,7 +12,7 @@ export const cleanSelectedConversation = (conversation: Conversation) => {
   if (!updatedConversation.model) {
     updatedConversation = {
       ...updatedConversation,
-      model: updatedConversation.model || OpenAIModels[OpenAIModelID.GPT_3_5]
+      model: updatedConversation.model || OpenAIModels[OpenAIModelID.YJZF_LLM_1118]
     };
   }
 
@@ -43,7 +43,7 @@ export const cleanConversationHistory = (history: Conversation[]) => {
 
   updatedHistory.forEach((conversation) => {
     if (!conversation.model) {
-      conversation.model = OpenAIModels[OpenAIModelID.GPT_3_5];
+      conversation.model = OpenAIModels[OpenAIModelID.YJZF_LLM_1118];
     }
 
     if (!conversation.prompt) {

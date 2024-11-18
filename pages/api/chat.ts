@@ -40,26 +40,6 @@ const handler = async (req: Request): Promise<Response> => {
     try {
         const {model, messages, key, prompt} = (await req.json()) as ChatBody;
 
-        if (model.id === OpenAIModelID.GPT_4_TURBO || model.id === OpenAIModelID.GPT_4_TURBO_PREVIEW || model.id === OpenAIModelID.GPT_4_O || model.id === OpenAIModelID.O1_PREVIEW || model.id === OpenAIModelID.O1_MINI) {
-            const currentDateInYYYYMMDD = getCurrentDateInYYYYMMDD();
-            const userKey = currentDateInYYYYMMDD + "_" + key;
-            //const currentTimestampIn3HourWindow = getCurrentTimestampIn3HourWindow();
-            //const userKey = currentTimestampIn3HourWindow + "_" + key;
-            let dailyLimit = 500;
-            if (process.env.GITEE_ADMIN_TOKEN && process.env.GITEE_ADMIN_TOKEN.includes(key)) {
-                dailyLimit = 5000;
-            }
-            if (globalData.data[userKey]) {
-                if (globalData.data[userKey] >= dailyLimit) {
-                    return new Response("Error: reached the daily request limit for 500 times per day", {status: 500});
-                } else {
-                    globalData.data[userKey]++;
-                }
-            } else {
-                globalData.data[userKey] = 1;
-            }
-        }
-
         await init((imports) => WebAssembly.instantiate(wasm, imports));
         const encoding = new Tiktoken(
             tiktokenModel.bpe_ranks,
@@ -68,7 +48,7 @@ const handler = async (req: Request): Promise<Response> => {
         );
 
         //const tokenLimit = model.id === OpenAIModelID.GPT_4 ? 6000 : 3000;
-        let tokenLimit = model.id === OpenAIModelID.GPT_3_5 ? 10000 : 70000;
+        let tokenLimit = 6000;
 
         let promptToSend = prompt;
         if (!promptToSend) {
@@ -93,13 +73,8 @@ const handler = async (req: Request): Promise<Response> => {
 
         encoding.free();
 
-        if (model.id === OpenAIModelID.O1_MINI || model.id === OpenAIModelID.O1_PREVIEW) {
-            const stream = await OpenAIO1(model, promptToSend, key, messagesToSend);
-            return new Response(stream);
-        } else {
-            const stream = await OpenAIStream(model, promptToSend, key, messagesToSend);
-            return new Response(stream);
-        }
+        const stream = await OpenAIStream(model, promptToSend, key, messagesToSend);
+        return new Response(stream);
 
     } catch (error) {
         console.error(error);

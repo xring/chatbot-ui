@@ -282,7 +282,7 @@ export default function Home() {
       id: lastConversation ? lastConversation.id + 1 : 1,
       name: `Conversation ${lastConversation ? lastConversation.id + 1 : 1}`,
       messages: [],
-      model: OpenAIModels[OpenAIModelID.GPT_3_5],
+      model: OpenAIModels[OpenAIModelID.YJZF_LLM_1118],
       prompt: DEFAULT_SYSTEM_PROMPT,
       folderId: 0
     };
@@ -311,7 +311,7 @@ export default function Home() {
         id: 1,
         name: "New conversation",
         messages: [],
-        model: OpenAIModels[OpenAIModelID.GPT_3_5],
+        model: OpenAIModels[OpenAIModelID.YJZF_LLM_1118],
         prompt: DEFAULT_SYSTEM_PROMPT,
         folderId: 0
       });
@@ -339,7 +339,7 @@ export default function Home() {
       id: 1,
       name: "New conversation",
       messages: [],
-      model: OpenAIModels[OpenAIModelID.GPT_3_5],
+      model: OpenAIModels[OpenAIModelID.YJZF_LLM_1118],
       prompt: DEFAULT_SYSTEM_PROMPT,
       folderId: 0
     });
@@ -408,7 +408,7 @@ export default function Home() {
         id: 1,
         name: "New conversation",
         messages: [],
-        model: OpenAIModels[OpenAIModelID.GPT_3_5],
+        model: OpenAIModels[OpenAIModelID.YJZF_LLM_1118],
         prompt: DEFAULT_SYSTEM_PROMPT,
         folderId: 0
       });

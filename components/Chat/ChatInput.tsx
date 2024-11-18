@@ -16,7 +16,7 @@ export const ChatInput: FC<Props> = ({ onSend, messageIsStreaming, model, stopCo
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
-    const maxLength = model.id === OpenAIModelID.GPT_3_5 ? 12000 : 24000;
+    const maxLength = model.id === OpenAIModelID.YJZF_LLM_1118 ? 12000 : 24000;
 
     if (value.length > maxLength) {
       alert(`Message limit is ${maxLength} characters`);
