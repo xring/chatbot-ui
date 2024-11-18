@@ -4,13 +4,13 @@ export interface OpenAIModel {
 }
 
 export enum OpenAIModelID {
-  YJZF_LLM_1118 = "yjzf-llm-1119"
+  YJZF_LLM_1118 = "yjzf-llm-1118"
 }
 
 export const OpenAIModels: Record<OpenAIModelID, OpenAIModel> = {
   [OpenAIModelID.YJZF_LLM_1118]: {
     id: OpenAIModelID.YJZF_LLM_1118,
-    name: "yjzf-llm-1119"
+    name: "yjzf-llm-1118"
   }
 };
 
