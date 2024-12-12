@@ -22,6 +22,7 @@ export default function Home() {
   const [showSidebar, setShowSidebar] = useState<boolean>(true);
   const [apiKey, setApiKey] = useState<string>("");
   const [messageError, setMessageError] = useState<boolean>(false);
+  const [tokenError, setTokenError] = useState<boolean>(false);
   const [modelError, setModelError] = useState<boolean>(false);
   const [isUsingEnv, setIsUsingEnv] = useState<boolean>(false);
 
@@ -178,6 +179,11 @@ export default function Home() {
         key
       })
     });
+
+    if (response.status === 401) {
+      setTokenError(true);
+      return;
+    }
 
     if (!response.ok) {
       setModelError(true);
@@ -484,6 +490,7 @@ export default function Home() {
               apiKey={apiKey}
               isUsingEnv={isUsingEnv}
               modelError={modelError}
+              tokenError={tokenError}
               messageError={messageError}
               models={models}
               loading={loading}
