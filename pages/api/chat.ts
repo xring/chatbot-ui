@@ -10,7 +10,14 @@ export const config = {
     runtime: "edge",
 };
 
-const globalData = require('../../globalData');
+declare global {
+    // 在全局范围内声明 keyValueStore
+    var requestLimitStore: Record<string, number> | undefined;
+}
+
+// 使用全局变量存储键值对
+global.requestLimitStore = global.requestLimitStore || {};
+const requestLimitStore = global.requestLimitStore;
 
 function getCurrentDateInYYYYMMDD(): string {
     const date = new Date();
@@ -49,14 +56,10 @@ const handler = async (req: Request): Promise<Response> => {
             if (process.env.GITEE_ADMIN_TOKEN && process.env.GITEE_ADMIN_TOKEN.includes(key)) {
                 dailyLimit = 5000;
             }
-            if (globalData.data[userKey]) {
-                if (globalData.data[userKey] >= dailyLimit) {
-                    return new Response("Error: reached the daily request limit for 500 times per day", {status: 500});
-                } else {
-                    globalData.data[userKey]++;
-                }
-            } else {
-                globalData.data[userKey] = 1;
+            console.log(requestLimitStore)
+            requestLimitStore[key] = (requestLimitStore[key] || 0) + 1;
+            if (requestLimitStore[key] > dailyLimit) {
+                return new Response("Error: reached the daily request limit for 500 times per day", {status: 403});
             }
         }
 

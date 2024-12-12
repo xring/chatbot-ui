@@ -6,6 +6,7 @@ import {ChatMessage} from "./ChatMessage";
 import {ModelSelect} from "./ModelSelect";
 import {Regenerate} from "./Regenerate";
 import {SystemPrompt} from "./SystemPrompt";
+import {DailyLimit} from "@/components/Chat/DailyLimit";
 
 interface Props {
     conversation: Conversation;
@@ -15,6 +16,7 @@ interface Props {
     messageIsStreaming: boolean;
     modelError: boolean;
     tokenError: boolean;
+    limitError: boolean;
     messageError: boolean;
     loading: boolean;
     lightMode: "light" | "dark";
@@ -32,6 +34,7 @@ export const Chat: FC<Props> = ({
                                     messageIsStreaming,
                                     modelError,
                                     tokenError,
+                                    limitError,
                                     messageError,
                                     loading,
                                     lightMode,
@@ -175,6 +178,9 @@ export const Chat: FC<Props> = ({
                                 }
                             }}
                         />
+                    ) : limitError ? (
+                        <DailyLimit onDailyLimit={() => {
+                        }}/>
                     ) : (
                         <ChatInput
                             stopConversationRef={stopConversationRef}

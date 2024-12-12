@@ -36,6 +36,7 @@ const handler = async (req: Request): Promise<Response> => {
         });
 
         if (response.status !== 200) {
+            console.log(response.status)
             throw new Error("OpenAI API returned an error");
         }
 

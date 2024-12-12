@@ -23,6 +23,7 @@ export default function Home() {
   const [apiKey, setApiKey] = useState<string>("");
   const [messageError, setMessageError] = useState<boolean>(false);
   const [tokenError, setTokenError] = useState<boolean>(false);
+  const [limitError, setLimitError] = useState<boolean>(false);
   const [modelError, setModelError] = useState<boolean>(false);
   const [isUsingEnv, setIsUsingEnv] = useState<boolean>(false);
 
@@ -68,6 +69,13 @@ export default function Home() {
         signal: controller.signal,
         body: JSON.stringify(chatBody)
       });
+
+      if (response.status === 403) {
+        setLimitError(true);
+        setLoading(false);
+        setMessageIsStreaming(false);
+        return;
+      }
 
       if (!response.ok) {
         setLoading(false);
@@ -491,6 +499,7 @@ export default function Home() {
               isUsingEnv={isUsingEnv}
               modelError={modelError}
               tokenError={tokenError}
+              limitError={limitError}
               messageError={messageError}
               models={models}
               loading={loading}
