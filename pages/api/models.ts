@@ -28,7 +28,7 @@ const handler = async (req: Request): Promise<Response> => {
 
         key = "";
 
-        const response = await fetch("https://api.openai.com/v1/models", {
+        const response = await fetch("https://llm.yjyz.com/v1/models", {
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${key ? key : process.env.OPENAI_API_KEY}`

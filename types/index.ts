@@ -10,6 +10,7 @@ export enum OpenAIModelID {
   GPT_4_O = "gpt-4o",
   O1_MINI = "o1-mini",
   O1_PREVIEW = "o1-preview",
+  CLAUDE_3_5_SONNET = "claude-3-5-sonnet-latest",
 }
 
 export const OpenAIModels: Record<OpenAIModelID, OpenAIModel> = {
@@ -36,6 +37,10 @@ export const OpenAIModels: Record<OpenAIModelID, OpenAIModel> = {
   [OpenAIModelID.O1_PREVIEW]: {
     id: OpenAIModelID.O1_PREVIEW,
     name: "O1-PREVIEW"
+  },
+  [OpenAIModelID.CLAUDE_3_5_SONNET]: {
+    id: OpenAIModelID.CLAUDE_3_5_SONNET,
+    name: "CLAUDE-3-5-SONNET-LATEST"
   }
 };
 

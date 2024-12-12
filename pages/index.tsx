@@ -427,7 +427,7 @@ export default function Home() {
         <title>But Chat</title>
         <meta
           name="description"
-          content="ChatGPT but better."
+          content="AI assistant for internal usage only."
         />
         <meta
           name="viewport"
