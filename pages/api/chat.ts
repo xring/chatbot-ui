@@ -1,6 +1,6 @@
 import {ChatBody, Message, OpenAIModelID} from "@/types";
 import {DEFAULT_SYSTEM_PROMPT} from "@/utils/app/const";
-import {OpenAIO1, OpenAIO1Stream, OpenAIStream} from "@/utils/server";
+import {ClaudeStream, OpenAIO1, OpenAIStream} from "@/utils/server";
 import tiktokenModel from "@dqbd/tiktoken/encoders/cl100k_base.json";
 import {init, Tiktoken} from "@dqbd/tiktoken/lite/init";
 // @ts-expect-error
@@ -47,7 +47,7 @@ const handler = async (req: Request): Promise<Response> => {
     try {
         const {model, messages, key, prompt} = (await req.json()) as ChatBody;
 
-        if (model.id === OpenAIModelID.CLAUDE_3_5_SONNET || model.id === OpenAIModelID.GPT_4_TURBO || model.id === OpenAIModelID.GPT_4_TURBO_PREVIEW || model.id === OpenAIModelID.GPT_4_O || model.id === OpenAIModelID.O1_PREVIEW || model.id === OpenAIModelID.O1_MINI) {
+        if (model.id === OpenAIModelID.CLAUDE_3_5_SONNET || model.id === OpenAIModelID.GPT_4_TURBO || model.id === OpenAIModelID.GPT_4_O || model.id === OpenAIModelID.O1_MINI) {
             const currentDateInYYYYMMDD = getCurrentDateInYYYYMMDD();
             const userKey = currentDateInYYYYMMDD + "_" + key;
             //const currentTimestampIn3HourWindow = getCurrentTimestampIn3HourWindow();
@@ -70,8 +70,20 @@ const handler = async (req: Request): Promise<Response> => {
             tiktokenModel.pat_str
         );
 
-        //const tokenLimit = model.id === OpenAIModelID.GPT_4 ? 6000 : 3000;
-        let tokenLimit = model.id === OpenAIModelID.GPT_3_5 ? 10000 : 70000;
+        let tokenLimit = 4095;
+        if (model.id === OpenAIModelID.GPT_4_O) {
+            tokenLimit = 16383;
+        } else if (model.id === OpenAIModelID.GPT_4_TURBO || model.id === OpenAIModelID.GPT_3_5) {
+            tokenLimit = 4095;
+        } else if (model.id === OpenAIModelID.O1) {
+            tokenLimit = 99999;
+        } else if (model.id === OpenAIModelID.O1_MINI) {
+            tokenLimit = 65535;
+        } else if (model.id === OpenAIModelID.GEMINI_2_0_FLASH_EXP || model.id === OpenAIModelID.GEMINI_1_5_FLASH || model.id === OpenAIModelID.GEMINI_1_5_PRO) {
+            tokenLimit = 8191;
+        } else if (model.id === OpenAIModelID.CLAUDE_3_5_SONNET) {
+            tokenLimit = 8191;
+        }
 
         let promptToSend = prompt;
         if (!promptToSend) {
@@ -96,11 +108,15 @@ const handler = async (req: Request): Promise<Response> => {
 
         encoding.free();
 
-        if (model.id === OpenAIModelID.O1_MINI || model.id === OpenAIModelID.O1_PREVIEW) {
-            const stream = await OpenAIO1(model, promptToSend, key, messagesToSend);
+        if (model.id === OpenAIModelID.O1_MINI || model.id === OpenAIModelID.O1) {
+            const stream = await OpenAIO1(tokenLimit, model, promptToSend, key, messagesToSend);
+            return new Response(stream);
+        }
+        if (model.id === OpenAIModelID.CLAUDE_3_5_SONNET) {
+            const stream = await ClaudeStream(tokenLimit, model, promptToSend, key, messagesToSend);
             return new Response(stream);
         } else {
-            const stream = await OpenAIStream(model, promptToSend, key, messagesToSend);
+            const stream = await OpenAIStream(tokenLimit, model, promptToSend, key, messagesToSend);
             return new Response(stream);
         }
 

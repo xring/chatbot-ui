@@ -55,7 +55,9 @@ const handler = async (req: Request): Promise<Response> => {
             })
             .filter(Boolean);
 
-        return new Response(JSON.stringify(models), {status: 200});
+        const sortedModels = models.sort((a, b) => a.id.localeCompare(b.id));
+
+        return new Response(JSON.stringify(sortedModels), {status: 200});
     } catch (error) {
         console.error(error);
         return new Response("Error: " + error, {status: 500});
