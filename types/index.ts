@@ -10,6 +10,7 @@ export enum OpenAIModelID {
     O1_MINI = "o1-mini",
     O1 = "o1",
     CLAUDE_3_5_SONNET = "claude-3-5-sonnet-latest",
+    CLAUDE_3_5_HAIKU = "claude-3-5-haiku-latest",
     GEMINI_1_5_PRO = "gemini-1.5-pro",
     GEMINI_1_5_FLASH = "gemini-1.5-flash",
     GEMINI_2_0_FLASH_EXP = "gemini-2.0-flash-exp",
@@ -39,6 +40,10 @@ export const OpenAIModels: Record<OpenAIModelID, OpenAIModel> = {
     [OpenAIModelID.CLAUDE_3_5_SONNET]: {
         id: OpenAIModelID.CLAUDE_3_5_SONNET,
         name: "CLAUDE-3-5-SONNET-LATEST"
+    },
+    [OpenAIModelID.CLAUDE_3_5_HAIKU]: {
+        id: OpenAIModelID.CLAUDE_3_5_HAIKU,
+        name: "CLAUDE-3-5-HAIKU-LATEST"
     },
     [OpenAIModelID.GEMINI_1_5_PRO]: {
         id: OpenAIModelID.GEMINI_1_5_PRO,
