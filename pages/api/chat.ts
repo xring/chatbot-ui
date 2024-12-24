@@ -47,7 +47,7 @@ const handler = async (req: Request): Promise<Response> => {
     try {
         const {model, messages, key, prompt} = (await req.json()) as ChatBody;
 
-        if (model.id === OpenAIModelID.CLAUDE_3_5_SONNET || model.id === OpenAIModelID.GPT_4_TURBO || model.id === OpenAIModelID.GPT_4_O || model.id === OpenAIModelID.O1_MINI) {
+        if (model.id === OpenAIModelID.CLAUDE_3_5_HAIKU || model.id === OpenAIModelID.CLAUDE_3_5_SONNET || model.id === OpenAIModelID.GPT_4_TURBO || model.id === OpenAIModelID.GPT_4_O || model.id === OpenAIModelID.O1_MINI) {
             const currentDateInYYYYMMDD = getCurrentDateInYYYYMMDD();
             const userKey = currentDateInYYYYMMDD + "_" + key;
             //const currentTimestampIn3HourWindow = getCurrentTimestampIn3HourWindow();
@@ -81,7 +81,7 @@ const handler = async (req: Request): Promise<Response> => {
             tokenLimit = 65535;
         } else if (model.id === OpenAIModelID.GEMINI_2_0_FLASH_EXP || model.id === OpenAIModelID.GEMINI_1_5_FLASH || model.id === OpenAIModelID.GEMINI_1_5_PRO) {
             tokenLimit = 8191;
-        } else if (model.id === OpenAIModelID.CLAUDE_3_5_SONNET) {
+        } else if (model.id === OpenAIModelID.CLAUDE_3_5_SONNET || model.id === OpenAIModelID.CLAUDE_3_5_HAIKU) {
             tokenLimit = 8191;
         }
 
