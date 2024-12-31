@@ -83,6 +83,8 @@ const handler = async (req: Request): Promise<Response> => {
             tokenLimit = 8191;
         } else if (model.id === OpenAIModelID.CLAUDE_3_5_SONNET || model.id === OpenAIModelID.CLAUDE_3_5_HAIKU) {
             tokenLimit = 8191;
+        } else if (model.id === OpenAIModelID.DEEPSEEK_V3) {
+            tokenLimit = 8191;
         }
 
         let promptToSend = prompt;
