@@ -8,6 +8,7 @@ export enum OpenAIModelID {
     GPT_4_TURBO = "gpt-4-turbo",
     GPT_4_O = "gpt-4o",
     O1_MINI = "o1-mini",
+    O3_MINI = "o3-mini",
     O1 = "o1",
     CLAUDE_3_5_SONNET = "claude-3-5-sonnet-latest",
     CLAUDE_3_5_HAIKU = "claude-3-5-haiku-latest",
@@ -15,6 +16,7 @@ export enum OpenAIModelID {
     GEMINI_1_5_FLASH = "gemini-1.5-flash",
     GEMINI_2_0_FLASH_EXP = "gemini-2.0-flash-exp",
     DEEPSEEK_V3 = "deepseek-chat",
+    DEEPSEEK_R1_32B = "deepseek-r1:32b",
 }
 
 export const OpenAIModels: Record<OpenAIModelID, OpenAIModel> = {
@@ -33,6 +35,10 @@ export const OpenAIModels: Record<OpenAIModelID, OpenAIModel> = {
     [OpenAIModelID.O1_MINI]: {
         id: OpenAIModelID.O1_MINI,
         name: "O1-MINI"
+    },
+    [OpenAIModelID.O3_MINI]: {
+        id: OpenAIModelID.O3_MINI,
+        name: "O3-MINI"
     },
     [OpenAIModelID.O1]: {
         id: OpenAIModelID.O1,
@@ -61,6 +67,10 @@ export const OpenAIModels: Record<OpenAIModelID, OpenAIModel> = {
     [OpenAIModelID.DEEPSEEK_V3]: {
         id: OpenAIModelID.DEEPSEEK_V3,
         name: "DEEPSEEK-V3"
+    },
+    [OpenAIModelID.DEEPSEEK_R1_32B]: {
+        id: OpenAIModelID.DEEPSEEK_R1_32B,
+        name: "DEEPSEEK-R1-32B"
     }
 };
 

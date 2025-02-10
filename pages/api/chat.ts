@@ -75,7 +75,7 @@ const handler = async (req: Request): Promise<Response> => {
             tokenLimit = 16383;
         } else if (model.id === OpenAIModelID.GPT_4_TURBO || model.id === OpenAIModelID.GPT_3_5) {
             tokenLimit = 4095;
-        } else if (model.id === OpenAIModelID.O1) {
+        } else if (model.id === OpenAIModelID.O1 || model.id === OpenAIModelID.O3_MINI) {
             tokenLimit = 99999;
         } else if (model.id === OpenAIModelID.O1_MINI) {
             tokenLimit = 65535;
@@ -83,7 +83,7 @@ const handler = async (req: Request): Promise<Response> => {
             tokenLimit = 8191;
         } else if (model.id === OpenAIModelID.CLAUDE_3_5_SONNET || model.id === OpenAIModelID.CLAUDE_3_5_HAIKU) {
             tokenLimit = 8191;
-        } else if (model.id === OpenAIModelID.DEEPSEEK_V3) {
+        } else if (model.id === OpenAIModelID.DEEPSEEK_V3 || model.id === OpenAIModelID.DEEPSEEK_R1_32B) {
             tokenLimit = 8191;
         }
 
@@ -110,7 +110,7 @@ const handler = async (req: Request): Promise<Response> => {
 
         encoding.free();
 
-        if (model.id === OpenAIModelID.O1_MINI || model.id === OpenAIModelID.O1) {
+        if (model.id === OpenAIModelID.O1_MINI || model.id === OpenAIModelID.O1 || model.id === OpenAIModelID.O3_MINI) {
             const stream = await OpenAIO1(tokenLimit, model, promptToSend, key, messagesToSend);
             return new Response(stream);
         }
