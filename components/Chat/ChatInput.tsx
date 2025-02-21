@@ -18,10 +18,10 @@ export const ChatInput: FC<Props> = ({ onSend, messageIsStreaming, model, stopCo
     const value = e.target.value;
     const maxLength = model.id === OpenAIModelID.GPT_3_5 ? 12000 : 24000;
 
-    if (value.length > maxLength) {
-      alert(`Message limit is ${maxLength} characters`);
-      return;
-    }
+    // if (value.length > maxLength) {
+    //   alert(`Message limit is ${maxLength} characters`);
+    //   return;
+    // }
 
     setContent(value);
   };

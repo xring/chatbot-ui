@@ -17,6 +17,7 @@ export enum OpenAIModelID {
     GEMINI_2_0_FLASH_EXP = "gemini-2.0-flash-exp",
     DEEPSEEK_V3 = "deepseek-chat",
     DEEPSEEK_R1_32B = "deepseek-r1:32b",
+    GLM_4 = "glm-4",
 }
 
 export const OpenAIModels: Record<OpenAIModelID, OpenAIModel> = {
@@ -71,6 +72,10 @@ export const OpenAIModels: Record<OpenAIModelID, OpenAIModel> = {
     [OpenAIModelID.DEEPSEEK_R1_32B]: {
         id: OpenAIModelID.DEEPSEEK_R1_32B,
         name: "DEEPSEEK-R1-32B"
+    },
+    [OpenAIModelID.GLM_4]: {
+        id: OpenAIModelID.GLM_4,
+        name: "GLM-4"
     }
 };
 
