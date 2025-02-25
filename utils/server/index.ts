@@ -131,30 +131,28 @@ export const ClaudeStream = async (max_tokens: number, model: OpenAIModel, syste
 
 export const Claude37Stream = async (max_tokens: number, model: OpenAIModel, systemPrompt: string, key: string, messages: Message[]) => {
     key = "";
-    const res = await fetch("https://api.anthropic.com/v1/messages", {
+    const body = JSON.stringify({
+        model: model.id,
+        messages: [
+            ...messages
+        ],
+        thinking: {
+            type: "enabled",
+            budget_tokens: 32000
+        },
+        max_tokens: 128000,
+        temperature: 1,
+        stream: true
+    });
+    //console.log(body);
+    const res = await fetch("https://claude.but.io/v1/messages", {
         headers: {
             "Content-Type": "application/json",
             "x-api-key": `${process.env.CLAUDE_API_KEY}`,
             "anthropic-beta": "output-128k-2025-02-19"
         },
         method: "POST",
-        body: JSON.stringify({
-            model: model.id,
-            messages: [
-                {
-                    role: "system",
-                    content: systemPrompt
-                },
-                ...messages
-            ],
-            thinking: {
-                type: "enabled",
-                budget_tokens: 32000
-            },
-            max_tokens: max_tokens,
-            temperature: 0.0,
-            stream: true
-        })
+        body: body
     });
 
     if (res.status !== 200) {
@@ -176,12 +174,38 @@ export const Claude37Stream = async (max_tokens: number, model: OpenAIModel, sys
                         return;
                     }
 
-                    //console.log(data)
                     try {
-                        const json = JSON.parse(data);
-                        const text = json.choices[0].delta.content;
-                        const queue = encoder.encode(text);
-                        controller.enqueue(queue);
+                        const json = JSON.parse(data) as any;
+                        if (json.type === "message_stop") {
+                            controller.close();
+                            return;
+                        }
+
+                        if (json.delta) {
+                            if (json.delta.thinking) {
+                                const text = json.delta.thinking
+                                const queue = encoder.encode(text);
+                                controller.enqueue(queue);
+                            }
+
+                            if (json.delta.text) {
+                                const text = json.delta.text
+                                const queue = encoder.encode(text);
+                                controller.enqueue(queue);
+                            }
+                        }
+                        if (json.content_block) {
+                            if (json.content_block.type === "thinking") {
+                                const text = "<think>"
+                                const queue = encoder.encode(text);
+                                controller.enqueue(queue);
+                            }
+                            if (json.content_block.type === "text") {
+                                const text = "</think>\n\n"
+                                const queue = encoder.encode(text);
+                                controller.enqueue(queue);
+                            }
+                        }
                     } catch (e) {
                         controller.error(e);
                     }
