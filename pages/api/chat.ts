@@ -1,6 +1,6 @@
 import {ChatBody, Message, OpenAIModelID} from "@/types";
 import {DEFAULT_SYSTEM_PROMPT} from "@/utils/app/const";
-import {ClaudeStream, OpenAIO1, OpenAIStream} from "@/utils/server";
+import {Claude37Stream, ClaudeStream, OpenAIO1, OpenAIStream} from "@/utils/server";
 import tiktokenModel from "@dqbd/tiktoken/encoders/cl100k_base.json";
 import {init, Tiktoken} from "@dqbd/tiktoken/lite/init";
 // @ts-expect-error
@@ -114,8 +114,11 @@ const handler = async (req: Request): Promise<Response> => {
             const stream = await OpenAIO1(tokenLimit, model, promptToSend, key, messagesToSend);
             return new Response(stream);
         }
-        if (model.id === OpenAIModelID.CLAUDE_3_5_SONNET || model.id === OpenAIModelID.CLAUDE_3_7_SONNET) {
+        if (model.id === OpenAIModelID.CLAUDE_3_5_SONNET) {
             const stream = await ClaudeStream(tokenLimit, model, promptToSend, key, messagesToSend);
+            return new Response(stream);
+        } else if (model.id === OpenAIModelID.CLAUDE_3_7_SONNET) {
+            const stream = await Claude37Stream(tokenLimit, model, promptToSend, key, messagesToSend);
             return new Response(stream);
         } else {
             const stream = await OpenAIStream(tokenLimit, model, promptToSend, key, messagesToSend);
