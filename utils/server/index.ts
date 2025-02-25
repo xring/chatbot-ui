@@ -176,7 +176,7 @@ export const Claude37Stream = async (max_tokens: number, model: OpenAIModel, sys
                         return;
                     }
 
-                    console.log(data)
+                    //console.log(data)
                     try {
                         const json = JSON.parse(data);
                         const text = json.choices[0].delta.content;
