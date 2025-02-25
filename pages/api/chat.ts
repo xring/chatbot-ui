@@ -81,7 +81,7 @@ const handler = async (req: Request): Promise<Response> => {
             tokenLimit = 65535;
         } else if (model.id === OpenAIModelID.GEMINI_2_0_FLASH_EXP || model.id === OpenAIModelID.GEMINI_1_5_FLASH || model.id === OpenAIModelID.GEMINI_1_5_PRO) {
             tokenLimit = 8191;
-        } else if (model.id === OpenAIModelID.CLAUDE_3_5_SONNET || model.id === OpenAIModelID.CLAUDE_3_5_HAIKU) {
+        } else if (model.id === OpenAIModelID.CLAUDE_3_5_SONNET || model.id === OpenAIModelID.CLAUDE_3_5_HAIKU || model.id === OpenAIModelID.CLAUDE_3_7_SONNET) {
             tokenLimit = 8191;
         } else if (model.id === OpenAIModelID.DEEPSEEK_V3 || model.id === OpenAIModelID.DEEPSEEK_R1_32B) {
             tokenLimit = 8191;
@@ -114,7 +114,7 @@ const handler = async (req: Request): Promise<Response> => {
             const stream = await OpenAIO1(tokenLimit, model, promptToSend, key, messagesToSend);
             return new Response(stream);
         }
-        if (model.id === OpenAIModelID.CLAUDE_3_5_SONNET) {
+        if (model.id === OpenAIModelID.CLAUDE_3_5_SONNET || model.id === OpenAIModelID.CLAUDE_3_7_SONNET) {
             const stream = await ClaudeStream(tokenLimit, model, promptToSend, key, messagesToSend);
             return new Response(stream);
         } else {
